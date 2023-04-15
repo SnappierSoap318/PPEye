@@ -520,3 +520,4 @@ Dataset/images/2/258.png
 Dataset/videos/3.mp4
 Dataset/videos/4.mp4
 src/__pycache__/hardHatDet.cpython-39.pyc
+__pycache__/server.cpython-39.pyc
