@@ -9,9 +9,6 @@ Use cases may apply in construction worksites, industrial Manufacturing plants, 
 ###### Not in any particular order
 - `src/main.py`
   - This runs the main chunk of the object detection code and saves the confidence value and the flag to a JSON file.
-- `src/test.py`
-  - Test script to check functioning of induvidual elements before integration
-  - will be removed soon™
 - `server.py`
   - This script takes the data from the main.py's JSON file and servers it on a socket connection through FastAPI annd socketIO
 - `app.html`
