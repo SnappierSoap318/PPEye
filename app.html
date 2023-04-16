@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dashboard</title>
-    <style>
-      #hardhat {
-        width: 50px;
-        height: 50px;
-        border: 1px solid black;
-      }
-    </style>
-    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
-    <script>
-      var socket = io('http://localhost:8000/');
 
-      socket.on('connect', function() {
-        console.log('Connected to server');
-      });
+<head>
+  <title>Example</title>
+  <style>
+    #container {
+      display: flex;
+    }
 
-      socket.on('data', function(data) {
-        console.log('Received data:', data);
+    #myDiv {
+      width: 200px;
+      height: 200px;
+      background-color: green;
+      text-align: center;
+      font-size: large;
+    }
+  </style>
+</head>
 
-        // Display the image
-        var img = document.createElement('img');
-        img.src = 'data:image/png;base64,' + data.image;
-        document.body.appendChild(img);
+<body>
+  <div id="container">
+    <img id="myImage" src="" alt="Image">
+    <div id="myDiv">HARD HAT PRESENT</div>
+    <p id="myFloat"></p>
+  </div>
+  <script>
+    // Fetch data from server
+    fetch('http://localhost:8000/')
+      .then(response => response.json())
+      .then(data => {
+        // Set image source
+        let myImage = document.querySelector('#myImage');
+        myImage.src = `data:image/png;base64,${data.image}`;
 
-        // Update the div color
-        var div = document.getElementById('hardhat');
+        // Set div color
         if (data.isWearingHardHat) {
-          div.style.backgroundColor = 'green';
-        } else {
-          div.style.backgroundColor = 'red';
+          let myDiv = document.querySelector('#myDiv');
+          myDiv.style.backgroundColor = 'red';
+          myDiv.innerHTML = "HARD HAT NOT PRESENT"
         }
 
-        // Display the conf value
-        var conf = document.getElementById('conf');
-        conf.textContent = 'Conf: ' + data.conf;
+        // Show float value
+        let myFloat = document.querySelector('#myFloat');
+        myFloat.textContent = `Confidence Level: ${((1 - data.conf) * 100).toFixed(3)}%`;
       });
-    </script>
-  </head>
-  <body>
-    <h1>Dashboard</h1>
-    <div id="hardhat"></div>
-    <span id="conf"></span>
-  </body>
+  </script>
+</body>
+
 </html>
